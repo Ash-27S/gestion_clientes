@@ -1,0 +1,11 @@
+<div class="container mt-5">
+    <h2>Eliminar Cliente</h2>
+
+    <p>¿Seguro que deseas eliminar a {{ customer.first_name }} {{ customer.last_name }}?</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button class="btn btn-danger">Eliminar</button>
+        <a href="{% url 'customer_list' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>

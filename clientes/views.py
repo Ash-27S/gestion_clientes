@@ -4,7 +4,12 @@ from .forms import CustomerForm, OrderForm
 
 def customer_list(request):
     customers = Customer.objects.all()
-    return render(request, 'clientes/customer_list.html', {'customers': customers})
+    form = CustomerForm()
+    return render(request, 'clientes/customer_list.html', {
+        'customers': customers,
+        'form': form
+    })
+    
 
 
 def customer_create(request):
@@ -26,5 +31,7 @@ def customer_update(request, id):
 
 def customer_delete(request, id):
     customer = get_object_or_404(Customer, id=id)
-    customer.delete()
-    return redirect('customer_list')
+    if request.method == 'POST':
+        customer.delete()
+        return redirect('customer_list')
+    return render(request, 'clientes/customer_delete.html', {'customer': customer})

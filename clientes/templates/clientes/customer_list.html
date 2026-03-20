@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clientes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5">
+
+    <h2>Lista de Clientes</h2>
+
+    <!-- BOTÓN MODAL -->
+    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#crearModal">
+        Agregar Cliente
+    </button>
+
+    <!-- TABLA -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Teléfono</th>
+                <th>Email</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in customers %}
+            <tr>
+                <td>{{ customer.first_name }} {{ customer.last_name }}</td>
+                <td>{{ customer.phone }}</td>
+                <td>{{ customer.email }}</td>
+                <td>
+                    <a href="{% url 'customer_update' customer.id %}" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="{% url 'customer_delete' customer.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal fade" id="crearModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Crear Cliente</h5>
+      </div>
+
+      <div class="modal-body">
+        <form method="post" action="{% url 'customer_create' %}">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button class="btn btn-success">Guardar</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- JS BOOTSTRAP (IMPORTANTE) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
